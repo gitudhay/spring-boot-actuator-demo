@@ -33,3 +33,71 @@ cd /home/local/BSILIND/udhayakumar.g/Softwares/Prometheus/prometheus-3.5.0.linux
 
 URL: http://localhost:9090/
 admin/admin
+
+
+## Grafana :
+
+Download URL: https://grafana.com/grafana/download
+
+### CLI Installation steps for Ubuntu:
+
+1.`sudo apt-get install -y adduser libfontconfig1 musl`
+- adduser → creates system user for Grafana service.
+- libfontconfig1 → font rendering library for dashboards.
+- musl → lightweight C library required by Grafana binaries.
+
+2.`wget https://dl.grafana.com/grafana-enterprise/release/12.1.1/grafana-enterprise_12.1.1_16903967602_linux_amd64.deb`
+
+- Downloads Grafana Enterprise v12.1.1 for Linux (amd64).
+
+3.`sudo dpkg -i grafana-enterprise_12.1.1_16903967602_linux_amd64.deb`
+
+Installs Grafana Enterprise into the system.
+- Configuration files → /etc/grafana/
+- Binary → /usr/sbin/grafana-server
+
+4.`sudo systemctl enable grafana-server`
+- Enables Grafana service to start on system boot.
+
+5.`sudo systemctl start grafana-server`
+- Starts Grafana service.
+
+6.`sudo service grafana-server status`
+- Checks the status of Grafana service.
+
+### Grafana Configuration:
+
+URL: http://localhost:3000/
+<br/>
+admin/admin
+- Step1: Configure the Prometheus data source
+<pre> 
+Configuration - Data Sources - Click on: Add data source then select Prometheus. 
+Mention the prometheus URL : http://localhost:9090/
+Click on Save & Test.
+Click on Back.
+</pre>
+- Step3: Create a new dashboard.
+<pre> 
+Click on + sign 
+    Either select Add empty panel.
+    - Give the prometheus metrics like jvm_buffer_memory_used_bytes etc and create a graph. 
+(OR) 
+Click on + sign 
+    Select Import 
+    Select the json file (Sample Spring boot dashboard JSON - https://grafana.com/grafana/dashboards/12900-springboot-apm-dashboard/) .
+    Select the Prometheus data source.
+    Click on Import.
+</pre>
+
+- Step3: Configuring email alerts.
+<pre> 
+Click on Alerting.
+Click on New Alert.
+</pre>
+
+<br/><br/>
+
+## ReadMe.md file syntax reference:
+- https://www.markdownguide.org/basic-syntax/
+- https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
