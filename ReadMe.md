@@ -5,6 +5,32 @@ This is a Spring Boot Actuator Demo Application with Prometheus and Grafana for 
 - Prometheus Version: 3.5.0
 - Grafana Version: 12.1.1
 
+### Configurations:
+
+#### 1. Add the following in the application.properties file: 
+- To enable micrometer metrics.
+  <pre>management.observations.annotations.enabled=true</pre>
+- To expose the endpoints to micrometer.
+  <pre>management.endpoints.web.exposure.include=prometheus</pre>
+- To assign Unique Application Names: Crucially, for Grafana to distinguish between applications, assign a unique application tag to each
+  <pre>management.metrics.tags.application=uk-spring-boot-actuator-demo</pre>
+
+#### 2. Add the following dependencies in the pom.xml file:
+<pre>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-aop</artifactId>
+</dependency>
+<dependency>
+    <groupId>io.micrometer</groupId>
+    <artifactId>micrometer-registry-prometheus</artifactId>
+</dependency>
+</pre>
+
 ## Prometheus:
 Download URL: https://prometheus.io/download/
 
@@ -25,6 +51,8 @@ Download URL: https://prometheus.io/download/
       labels:
         app: "prometheus"
 </pre>
+
+- Similarly, multiple jobs can be added for multiple applications.
 
 ### service start script:
 cd /home/local/BSILIND/udhayakumar.g/Softwares/Prometheus/prometheus-3.5.0.linux-amd64/
@@ -70,14 +98,14 @@ Installs Grafana Enterprise into the system.
 URL: http://localhost:3000/
 <br/>
 admin/admin
-- Step1: Configure the Prometheus data source
+- Step 1: Configure the Prometheus data source
 <pre> 
 Configuration - Data Sources - Click on: Add data source then select Prometheus. 
 Mention the prometheus URL : http://localhost:9090/
 Click on Save & Test.
 Click on Back.
 </pre>
-- Step3: Create a new dashboard.
+- Step 2: Create a new dashboard.
 <pre> 
 Click on + sign 
     Either select Add empty panel.
@@ -89,8 +117,9 @@ Click on + sign
     Select the Prometheus data source.
     Click on Import.
 </pre>
+- Step 3: On the Dashboard screen 'Application' drop down can be used to filter and view different applications metric graphs.
 
-- Step3: Configuring email alerts.
+- Step 4: Configuring email alerts.
 <pre> 
 Click on Alerting.
 Click on New Alert.
