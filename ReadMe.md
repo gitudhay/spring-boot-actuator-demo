@@ -121,11 +121,40 @@ Click on + sign
 
 - Step 4: Configuring email alerts.
 <pre> 
-Click on Alerting.
-Click on New Alert.
+TODO
 </pre>
 
 <br/><br/>
+
+## NOTE:
+- For Spring MVC project the following setup shall be followed,
+- add the following dependencies,
+<pre>
+    groupId:org.springframework.boot
+    artifactId:spring-boot-starter-actuator
+    
+    groupId:io.micrometer
+    artifactId:micrometer-registry-prometheus
+    scope:runtime
+</pre>
+- add the following in the application.properties file,
+<pre>
+    management.metrics.export.prometheus.enabled=true
+    management.endpoints.web.exposure.include=prometheus
+    # application tag name.
+    management.metrics.tags.application=spring-mvc-actuator-demo
+</pre>
+
+- Configure the prometheus.yml file,
+<pre>
+    - job_name: "spring-mvc-actuator-demo"
+      metrics_path: '/actuator/prometheus'
+      scrape_interval: 5s
+      static_configs:
+      - targets: ["localhost:8080"]
+      labels:
+        app: "prometheus"
+</pre>
 
 ## ReadMe.md file syntax reference:
 - https://www.markdownguide.org/basic-syntax/
